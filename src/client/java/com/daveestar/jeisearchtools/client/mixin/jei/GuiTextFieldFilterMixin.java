@@ -25,7 +25,6 @@ public abstract class GuiTextFieldFilterMixin implements SearchFieldLayout {
   @ModifyVariable(method = "updateBounds", at = @At("HEAD"), argsOnly = true, remap = false)
   private ImmutableRect2i jeiSearchTools$reserveButton(ImmutableRect2i area) {
     int reservedWidth = jeiSearchTools$BUTTON_WIDTH + jeiSearchTools$BUTTON_GAP + jeiSearchTools$CONFIG_GAP;
-    // Keep a usable text field even at small window sizes / large GUI scales.
     if (area.getWidth() < reservedWidth + 40 || area.getHeight() == 0) {
       jeiSearchTools$toolsButtonArea = ImmutableRect2i.EMPTY;
       return area;

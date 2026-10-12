@@ -16,8 +16,6 @@ import mezz.jei.gui.input.handlers.SearchInputLayer;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,9 +30,6 @@ import java.util.function.BooleanSupplier;
 
 @Mixin(value = SearchInputLayer.class, remap = false)
 public abstract class SearchInputLayerMixin {
-  @Unique
-  private static final Logger jeiSearchTools$LOGGER = LoggerFactory.getLogger("jei-search-tools");
-
   @Unique
   private static final long jeiSearchTools$DOUBLE_CLICK_NANOS = 250_000_000L;
 
@@ -95,8 +90,6 @@ public abstract class SearchInputLayerMixin {
         return false;
       }
 
-      // JEI's Fabric input bridge supplies doubleClick=false. Detect click pairs
-      // here.
       long now = System.nanoTime();
       long elapsed = now - jeiSearchTools$lastClickTime;
       double dx = event.x() - jeiSearchTools$lastClickX;
@@ -104,12 +97,6 @@ public abstract class SearchInputLayerMixin {
       boolean detectedDoubleClick = jeiSearchTools$lastClickScreen == screen &&
           elapsed >= 0 && elapsed < jeiSearchTools$DOUBLE_CLICK_NANOS &&
           dx * dx + dy * dy <= 16;
-
-      jeiSearchTools$LOGGER.debug(
-          "Search click: jeiDoubleClick={}, detectedDoubleClick={}, intervalMs={}, screen={}",
-          doubleClick, detectedDoubleClick,
-          jeiSearchTools$lastClickScreen == screen ? elapsed / 1_000_000 : -1,
-          screen.getClass().getSimpleName());
 
       if (detectedDoubleClick) {
         // Start a fresh pair after toggling, so a triple click only toggles once.
@@ -139,14 +126,17 @@ public abstract class SearchInputLayerMixin {
     if (!active.getAsBoolean()) {
       return;
     }
+
     var searchArea = textFieldFilter.getArea();
     if (SearchTools.isHighlightingEnabled() && !searchArea.isEmpty()) {
       graphics.outline(searchArea.getX(), searchArea.getY(), searchArea.getWidth(), searchArea.getHeight(),
           jeiSearchTools$HIGHLIGHT_BORDER_COLOR);
     }
+
     if (textFieldFilter.isActive() && textFieldFilter.isMouseOver(mouseX, mouseY)) {
       graphics.requestCursor(CursorTypes.POINTING_HAND);
     }
+
     jeiSearchTools$updateButtonBounds();
     jeiSearchTools$toolsButton.draw(graphics, mouseX, mouseY);
   }

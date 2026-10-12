@@ -10,13 +10,10 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.Slot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public final class InventoryHighlightTool implements SearchTool {
-  private static final Logger LOGGER = LoggerFactory.getLogger("jei-search-tools");
   private static final int OVERLAY_COLOR = 0xB0000000;
   private static final int MATCH_BORDER_COLOR = 0xFF55FF55;
   private static final int SLOT_SIZE = 16;
@@ -33,13 +30,11 @@ public final class InventoryHighlightTool implements SearchTool {
         return;
       }
 
-      // Draw above the slots, but before carried items and deferred tooltips.
       ScreenEvents.afterForeground(screen).register(
           (currentScreen, graphics, mouseX, mouseY, tickProgress) -> {
             render((AbstractContainerScreen<?>) currentScreen, graphics);
           });
     });
-    LOGGER.debug("Inventory highlight listeners registered");
   }
 
   @Override
@@ -58,15 +53,15 @@ public final class InventoryHighlightTool implements SearchTool {
 
   private void toggle() {
     if (!enabled && !SearchService.hasSearchText()) {
-      LOGGER.debug("Inventory highlight not enabled: JEI runtime unavailable or search text empty");
       return;
     }
+
     enabled = !enabled;
     if (enabled) {
       SearchService.invalidateMatches();
     }
+
     AbstractWidget.playButtonClickSound(Minecraft.getInstance().getSoundManager());
-    LOGGER.debug("Inventory highlight {}", enabled ? "enabled" : "disabled");
   }
 
   private void render(

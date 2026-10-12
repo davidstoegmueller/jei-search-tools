@@ -10,8 +10,6 @@ import mezz.jei.api.runtime.IIngredientVisibility;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,7 +18,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class SearchService {
-  private static final Logger LOGGER = LoggerFactory.getLogger("jei-search-tools");
   private static IJeiRuntime runtime;
   private static IIngredientHelper<ItemStack> itemHelper;
   private static String cachedFilter;
@@ -34,20 +31,22 @@ public final class SearchService {
     if (runtime == jeiRuntime) {
       return;
     }
+
     runtime = jeiRuntime;
     itemHelper = runtime.getIngredientManager().getIngredientHelper(VanillaTypes.ITEM_STACK);
+
     var listener = new MatchInvalidator();
     runtime.getIngredientManager().registerIngredientListener(listener);
     runtime.getJeiHelpers().getIngredientVisibility().registerListener(listener);
+
     invalidateMatches();
-    LOGGER.debug("JEI search runtime available");
   }
 
   public static void clearRuntime() {
     runtime = null;
     itemHelper = null;
+
     invalidateMatches();
-    LOGGER.debug("JEI search runtime unavailable");
   }
 
   public static boolean hasSearchText() {
@@ -99,10 +98,6 @@ public final class SearchService {
     cachedFilter = filter;
   }
 
-  /**
-   * JEI owns these listeners for the lifetime of its runtime; no screen is
-   * retained.
-   */
   private static final class MatchInvalidator
       implements IIngredientManager.IIngredientListener, IIngredientVisibility.IListener {
     @Override
