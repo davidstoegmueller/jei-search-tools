@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0] - 12.10.2026
+## [1.0.0] - 12.10.2026
 
 - Added inventory highlighting by double-clicking the JEI search bar.
 - Added green borders for matching items and the active search bar.
