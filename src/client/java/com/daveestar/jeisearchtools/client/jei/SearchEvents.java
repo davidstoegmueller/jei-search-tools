@@ -3,7 +3,7 @@ package com.daveestar.jeisearchtools.client.jei;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
-public final class JEISearchEvents {
+public final class SearchEvents {
   public static final Event<SearchDoubleClick> DOUBLE_CLICK = EventFactory.createArrayBacked(
       SearchDoubleClick.class,
       listeners -> () -> {
@@ -20,7 +20,7 @@ public final class JEISearchEvents {
         }
       });
 
-  private JEISearchEvents() {
+  private SearchEvents() {
   }
 
   @FunctionalInterface

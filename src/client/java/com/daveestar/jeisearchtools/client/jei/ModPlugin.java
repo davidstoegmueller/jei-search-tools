@@ -6,7 +6,7 @@ import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.Identifier;
 
 @JeiPlugin
-public final class JEIModPlugin implements IModPlugin {
+public final class ModPlugin implements IModPlugin {
   private static final Identifier ID = Identifier.fromNamespaceAndPath("jeisearchtools", "plugin");
 
   @Override
@@ -16,12 +16,12 @@ public final class JEIModPlugin implements IModPlugin {
 
   @Override
   public void onRuntimeAvailable(IJeiRuntime runtime) {
-    JEISearchService.setRuntime(runtime);
+    SearchService.setRuntime(runtime);
   }
 
   @Override
   public void onRuntimeUnavailable() {
-    JEISearchService.clearRuntime();
-    JEISearchEvents.RUNTIME_UNAVAILABLE.invoker().onRuntimeUnavailable();
+    SearchService.clearRuntime();
+    SearchEvents.RUNTIME_UNAVAILABLE.invoker().onRuntimeUnavailable();
   }
 }

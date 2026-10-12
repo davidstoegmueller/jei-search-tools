@@ -5,11 +5,11 @@
   "name": "JEI Search Tools",
   "description": "Additional search tools for Just Enough Items. (JEI)",
   "authors": ["daveestar"],
-  "icon": "assets/jei-search-tools/icon.png",
+  "icon": "assets/jei-search-tools/images/modIcon.png",
   "environment": "client",
   "entrypoints": {
     "client": ["com.daveestar.jeisearchtools.client.JEISearchToolsClient"],
-    "jei_mod_plugin": ["com.daveestar.jeisearchtools.client.jei.JEIModPlugin"]
+    "jei_mod_plugin": ["com.daveestar.jeisearchtools.client.jei.ModPlugin"]
   },
   "mixins": [
     {
