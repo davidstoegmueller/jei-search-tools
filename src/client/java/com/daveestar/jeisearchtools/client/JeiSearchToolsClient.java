@@ -1,10 +1,19 @@
 package com.daveestar.jeisearchtools.client;
 
+import com.daveestar.jeisearchtools.client.tool.SearchTool;
+import com.daveestar.jeisearchtools.client.tool.highlight.InventoryHighlightTool;
 import net.fabricmc.api.ClientModInitializer;
 
-public class JeiSearchToolsClient implements ClientModInitializer {
-	@Override
-	public void onInitializeClient() {
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-	}
+import java.util.List;
+
+public final class JEISearchToolsClient implements ClientModInitializer {
+  private final List<SearchTool> tools = List.of(
+      new InventoryHighlightTool());
+
+  @Override
+  public void onInitializeClient() {
+    for (SearchTool tool : tools) {
+      tool.register();
+    }
+  }
 }
