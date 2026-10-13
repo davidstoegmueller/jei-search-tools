@@ -14,4 +14,14 @@ Find matching items in your inventory and open containers. Matches receive a gre
 
 **Use:** enter a JEI search, then double-click the search bar to toggle highlighting.
 
+### 🧮 Calculator
+
+Calculate directly in the JEI search bar. Results appear as plain `= value` text on the left, without reducing the search bar's width. Recognized formulas stay white.
+
+**Use:** type a formula such as `2*(3+4)` to see `= 14`. Results update as you type; incomplete or invalid formulas show no result. Hover a shortened result to see it in full.
+
+Supports `+`, `-`, `*`, `/`, `^`, parentheses, decimal points or commas, `sqrt(x)`, `sin(x)`, `cos(x)`, `pi` and `%`. Angles use degrees (`sin(90)` = `1`); percentages divide by 100 (`200*10%` = `20`).
+
+## Installation
+
 Install JEI Search Tools and its dependencies in your client's `mods` folder. No server installation is required.
