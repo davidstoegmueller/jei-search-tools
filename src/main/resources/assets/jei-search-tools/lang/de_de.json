@@ -1,4 +1,8 @@
 {
   "jei-search-tools.highlight.name": "Inventar-Highlighter",
-  "jei-search-tools.highlight.usage": "Doppelklick auf Suchleiste zum Umschalten."
+  "jei-search-tools.highlight.usage": "Doppelklick auf Suchleiste zum Umschalten.",
+  "jei-search-tools.calculator.name": "Taschenrechner",
+  "jei-search-tools.calculator.usage": "Formel eingeben: +, -, *, /, ^ und Klammern.",
+  "jei-search-tools.calculator.functions": "sqrt(x), sin(x), cos(x); Winkel in Grad.",
+  "jei-search-tools.calculator.percent": "Dezimalzahlen: Punkt oder Komma. 50% = 0,5."
 }

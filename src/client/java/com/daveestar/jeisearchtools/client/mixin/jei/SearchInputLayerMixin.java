@@ -3,6 +3,7 @@ package com.daveestar.jeisearchtools.client.mixin.jei;
 import com.daveestar.jeisearchtools.client.jei.SearchEvents;
 import com.daveestar.jeisearchtools.client.jei.SearchFieldLayout;
 import com.daveestar.jeisearchtools.client.gui.SearchToolsButton;
+import com.daveestar.jeisearchtools.client.gui.CalculatorResult;
 import com.daveestar.jeisearchtools.client.tool.SearchTools;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
@@ -51,6 +52,9 @@ public abstract class SearchInputLayerMixin {
   @Unique
   private final SearchToolsButton jeiSearchTools$toolsButton = new SearchToolsButton();
 
+  @Unique
+  private final CalculatorResult jeiSearchTools$calculatorResult = new CalculatorResult();
+
   @Shadow
   @Final
   private GuiTextFieldFilter textFieldFilter;
@@ -70,8 +74,9 @@ public abstract class SearchInputLayerMixin {
       return;
     }
 
-    jeiSearchTools$updateButtonBounds();
-    if (input.isMouseInput() && jeiSearchTools$toolsButton.isMouseOver(input.getMouseX(), input.getMouseY())) {
+    jeiSearchTools$updateControlBounds();
+    if (input.isMouseInput() && (jeiSearchTools$toolsButton.isMouseOver(input.getMouseX(), input.getMouseY()) ||
+        jeiSearchTools$calculatorResult.isMouseOver(input.getMouseX(), input.getMouseY()))) {
       jeiSearchTools$lastClickScreen = null;
       cir.setReturnValue(Optional.of(ConsumedInput.INSTANCE));
       return;
@@ -115,8 +120,10 @@ public abstract class SearchInputLayerMixin {
 
   @Inject(method = "isMouseOver", at = @At("RETURN"), cancellable = true, remap = false)
   private void jeiSearchTools$includeButton(double x, double y, CallbackInfoReturnable<Boolean> cir) {
-    jeiSearchTools$updateButtonBounds();
-    if (active.getAsBoolean() && jeiSearchTools$toolsButton.isMouseOver(x, y)) {
+    jeiSearchTools$updateControlBounds();
+
+    if (active.getAsBoolean() && (jeiSearchTools$toolsButton.isMouseOver(x, y) ||
+        jeiSearchTools$calculatorResult.isMouseOver(x, y))) {
       cir.setReturnValue(true);
     }
   }
@@ -137,14 +144,18 @@ public abstract class SearchInputLayerMixin {
       graphics.requestCursor(CursorTypes.POINTING_HAND);
     }
 
-    jeiSearchTools$updateButtonBounds();
+    jeiSearchTools$updateControlBounds();
     jeiSearchTools$toolsButton.draw(graphics, mouseX, mouseY);
+    jeiSearchTools$calculatorResult.draw(graphics, mouseX, mouseY);
   }
 
   @Unique
-  private void jeiSearchTools$updateButtonBounds() {
+  private void jeiSearchTools$updateControlBounds() {
     jeiSearchTools$toolsButton.updateBounds(
         ((SearchFieldLayout) textFieldFilter).jeiSearchTools$getToolsButtonArea());
+
+    jeiSearchTools$calculatorResult.updateBounds(
+        textFieldFilter.getArea(), SearchTools.calculatorResult(textFieldFilter.getValue()));
   }
 
   @Inject(method = "resetInput", at = @At("HEAD"), remap = false)

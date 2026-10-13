@@ -1,4 +1,8 @@
 {
-  "jei-search-tools.highlight.name": "Inventory highlighter",
-  "jei-search-tools.highlight.usage": "Double-click search bar to toggle."
+  "jei-search-tools.highlight.name": "Inventory Highlighter",
+  "jei-search-tools.highlight.usage": "Double-click search bar to toggle.",
+  "jei-search-tools.calculator.name": "Calculator",
+  "jei-search-tools.calculator.usage": "Type a formula: +, -, *, /, ^ and parentheses.",
+  "jei-search-tools.calculator.functions": "sqrt(x), sin(x), cos(x); angles in degrees.",
+  "jei-search-tools.calculator.percent": "Decimals: dot or comma. 50% = 0.5."
 }
